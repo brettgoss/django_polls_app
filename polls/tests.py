@@ -51,6 +51,16 @@ class QuestionMethodTests(TestCase):
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
 
+class ChoiceMethodTests(TestCase):
+    def test_choice_text_should_be_string(self):
+        """
+        Choice text should be a string regardless of input type.
+        """
+        question = create_question(question_text="Past question.", days=-30)
+        create_choice(question=question, choice_text=333)
+        choice = Choice.objects.get(question=question.id)
+        self.assertIs(isinstance(choice.choice_text, str), True)
+
 class QuestionViewTests(TestCase):
     def test_index_view_with_no_questions(self):
         """
