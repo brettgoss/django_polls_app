@@ -102,6 +102,15 @@ class QuestionViewTests(TestCase):
             ['<Question: Past question 2.>', '<Question: Past question 1.>']
         )
 
+    def test_index_view_with_question_with_no_choices(self):
+        """
+        A question should only be displayed if it has choices.
+        """
+        create_question(question_text="Past question with no choices.", days=-5)
+        response = self.client.get(reverse('polls:index'))
+        self.assertContains(response, "No polls are available.")
+        self.assertQuerysetEqual(response.context['latest_question_list'], [])
+
 class QuestionIndexDetailTests(TestCase):
     def test_detail_view_with_a_future_question(self):
         """
