@@ -5,7 +5,7 @@ import datetime
 from django.utils import timezone
 from django.test import TestCase
 from django.urls import reverse
-from .models import Question
+from .models import Choice, Question
 
 # Create your tests here.
 def create_question(question_text, days):
@@ -16,6 +16,12 @@ def create_question(question_text, days):
     """
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(question_text=question_text, pub_date=time)
+
+def create_choice(question, choice_text):
+    """
+    Creates a choice associated with the given `question` and `choice_text`.
+    """
+    return Choice.objects.create(question=question, choice_text=choice_text)
 
 class QuestionMethodTests(TestCase):
     def test_was_published_recently_with_future_question(self):
@@ -104,12 +110,24 @@ class QuestionViewTests(TestCase):
 
     def test_index_view_with_question_with_no_choices(self):
         """
-        A question should only be displayed if it has choices.
+        A question should not be displayed if it has no choices.
         """
         create_question(question_text="Past question with no choices.", days=-5)
         response = self.client.get(reverse('polls:index'))
         self.assertContains(response, "No polls are available.")
         self.assertQuerysetEqual(response.context['latest_question_list'], [])
+
+    def test_index_view_with_question_with_a_choice(self):
+        """
+        A question should be displayed if it has choices.
+        """
+        question = create_question(question_text="Past question with choices.", days=-5)
+        create_choice(question=question, choice_text="Choice 1.")
+        response = self.client.get(reverse('polls:index'))
+        self.assertQuerysetEqual(
+            response.context['latest_question_list'],
+            ['<Question: Past question with choices.>']
+        )
 
 class QuestionIndexDetailTests(TestCase):
     def test_detail_view_with_a_future_question(self):
