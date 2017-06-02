@@ -1,5 +1,5 @@
 body {
-  padding-top: 80px;
+  padding-top: 70px;
 }
 
 #navbar {
@@ -10,6 +10,18 @@ body {
   top: 0;
 }
 
+ul {
+  list-style: none;
+}
+
 li a {
   color: green;
+}
+
+.container {
+  padding: 100px 40px;
+  width: 80%;
+  min-height: 100%;
+  margin: 0 auto;
+  background: #eee;
 }
