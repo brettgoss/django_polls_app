@@ -4,3 +4,9 @@
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 </head>
+<body>
+  <nav id="navbar">
+    <ul>
+      <li><a href="{% url 'polls:index' %}">Home</a></li>
+    </ul>
+  </nav>
