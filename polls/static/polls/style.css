@@ -1,3 +1,27 @@
+body {
+  padding-top: 70px;
+}
+
+#navbar {
+  width: 100%;
+  position: fixed;
+  background: #333;
+  height: 70px;
+  top: 0;
+}
+
+ul {
+  list-style: none;
+}
+
 li a {
   color: green;
+}
+
+.container {
+  padding: 100px 40px;
+  width: 80%;
+  min-height: 100%;
+  margin: 0 auto;
+  background: #eee;
 }
