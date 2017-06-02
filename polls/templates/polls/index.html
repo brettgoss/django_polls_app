@@ -1,6 +1,4 @@
-{% load static %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+{% include './_header.html' %}
 
 {% if latest_question_list %}
     <ul>
@@ -11,3 +9,5 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
+{% include './_footer.html' %}
